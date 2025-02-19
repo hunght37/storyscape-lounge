@@ -79,14 +79,14 @@ export const AddStoryDialog = ({ onStoryAdded }: { onStoryAdded: () => void }) =
 
       const { data: story, error: storyError } = await supabase
         .from("stories")
-        .insert({
-          title: formData.get("title"),
-          author: formData.get("author"),
-          description: formData.get("description"),
+        .insert([{
+          title: formData.get("title") as string,
+          author: formData.get("author") as string,
+          description: formData.get("description") as string,
           cover_url: coverUrl,
-          status: formData.get("status"),
+          status: formData.get("status") as "ongoing" | "completed" | "dropped",
           user_id: user.id,
-        })
+        }])
         .select()
         .single();
 
