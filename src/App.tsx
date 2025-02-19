@@ -8,6 +8,9 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Stories from "./pages/Stories";
+import Categories from "./pages/Categories";
+import Rankings from "./pages/Rankings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +32,30 @@ const App = () => (
               }
             />
             <Route path="/auth" element={<Auth />} />
+            <Route
+              path="/stories"
+              element={
+                <ProtectedRoute>
+                  <Stories />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <ProtectedRoute>
+                  <Categories />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/rankings"
+              element={
+                <ProtectedRoute>
+                  <Rankings />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

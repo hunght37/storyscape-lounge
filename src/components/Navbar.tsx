@@ -4,7 +4,7 @@ import { Menu, Moon, Sun, LogOut } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 export const Navbar = () => {
@@ -31,19 +31,19 @@ export const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
-          <a className="mr-6 flex items-center space-x-2" href="/">
+          <Link to="/" className="mr-6 flex items-center space-x-2">
             <span className="hidden font-bold sm:inline-block">TruyenHay</span>
-          </a>
+          </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
-            <a className="nav-link" href="/stories">
+            <Link to="/stories" className="nav-link">
               Truyện mới
-            </a>
-            <a className="nav-link" href="/categories">
+            </Link>
+            <Link to="/categories" className="nav-link">
               Thể loại
-            </a>
-            <a className="nav-link" href="/rankings">
+            </Link>
+            <Link to="/rankings" className="nav-link">
               Bảng xếp hạng
-            </a>
+            </Link>
           </nav>
         </div>
         <Button
@@ -73,7 +73,7 @@ export const Navbar = () => {
             </Button>
           ) : (
             <Button variant="outline" asChild>
-              <a href="/auth">Đăng nhập</a>
+              <Link to="/auth">Đăng nhập</Link>
             </Button>
           )}
         </div>
