@@ -22,8 +22,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { BookPlus, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { CategorySelector } from "./CategorySelector";
+import { addStoryCategories, createStory, uploadCoverImage } from "@/utils/story";
 
 interface Category {
   id: string;
@@ -59,51 +60,20 @@ export const AddStoryDialog = ({ onStoryAdded }: { onStoryAdded: () => void }) =
 
     try {
       let coverUrl = null;
-
       if (coverFile) {
-        const fileExt = coverFile.name.split(".").pop();
-        const filePath = `${crypto.randomUUID()}.${fileExt}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from("story-covers")
-          .upload(filePath, coverFile);
-
-        if (uploadError) throw uploadError;
-
-        const { data: { publicUrl } } = supabase.storage
-          .from("story-covers")
-          .getPublicUrl(filePath);
-
-        coverUrl = publicUrl;
+        coverUrl = await uploadCoverImage(coverFile);
       }
 
-      const { data: story, error: storyError } = await supabase
-        .from("stories")
-        .insert([{
-          title: formData.get("title") as string,
-          author: formData.get("author") as string,
-          description: formData.get("description") as string,
-          cover_url: coverUrl,
-          status: formData.get("status") as "ongoing" | "completed" | "dropped",
-          user_id: user.id,
-        }])
-        .select()
-        .single();
+      const story = await createStory({
+        title: formData.get("title") as string,
+        author: formData.get("author") as string,
+        description: formData.get("description") as string,
+        cover_url: coverUrl,
+        status: formData.get("status") as "ongoing" | "completed" | "dropped",
+        user_id: user.id,
+      });
 
-      if (storyError) throw storyError;
-
-      if (selectedCategories.length > 0) {
-        const { error: categoryError } = await supabase
-          .from("story_categories")
-          .insert(
-            selectedCategories.map((categoryId) => ({
-              story_id: story.id,
-              category_id: categoryId,
-            }))
-          );
-
-        if (categoryError) throw categoryError;
-      }
+      await addStoryCategories(story.id, selectedCategories);
 
       toast({
         title: "Thành công!",
@@ -127,11 +97,11 @@ export const AddStoryDialog = ({ onStoryAdded }: { onStoryAdded: () => void }) =
   };
 
   const handleCategorySelect = (categoryId: string) => {
-    if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(selectedCategories.filter((id) => id !== categoryId));
-    } else {
-      setSelectedCategories([...selectedCategories, categoryId]);
-    }
+    setSelectedCategories((prev) => 
+      prev.includes(categoryId) 
+        ? prev.filter((id) => id !== categoryId)
+        : [...prev, categoryId]
+    );
   };
 
   return (
@@ -181,21 +151,11 @@ export const AddStoryDialog = ({ onStoryAdded }: { onStoryAdded: () => void }) =
               </SelectContent>
             </Select>
           </div>
-          <div className="space-y-2">
-            <Label>Thể loại</Label>
-            <div className="flex flex-wrap gap-2">
-              {categories?.map((category) => (
-                <Badge
-                  key={category.id}
-                  variant={selectedCategories.includes(category.id) ? "default" : "outline"}
-                  className="cursor-pointer"
-                  onClick={() => handleCategorySelect(category.id)}
-                >
-                  {category.name}
-                </Badge>
-              ))}
-            </div>
-          </div>
+          <CategorySelector
+            categories={categories}
+            selectedCategories={selectedCategories}
+            onSelect={handleCategorySelect}
+          />
           <div className="flex justify-end">
             <Button type="submit" disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
