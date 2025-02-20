@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const mockStories = [
   {
+    id: "1",
     title: "Đấu Phá Thương Khung",
     author: "Thiên Tằm Thổ Đậu",
     description:
@@ -14,6 +15,7 @@ const mockStories = [
     chaptersCount: 1665,
   },
   {
+    id: "2",
     title: "Toàn Chức Pháp Sư",
     author: "Thần Đông",
     description:
@@ -41,7 +43,7 @@ const Index = () => {
           </div>
           <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
             {mockStories.map((story) => (
-              <StoryCard key={story.title} {...story} />
+              <StoryCard key={story.id} {...story} />
             ))}
           </div>
         </section>
@@ -58,7 +60,7 @@ const Index = () => {
           </div>
           <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
             {mockStories.map((story) => (
-              <StoryCard key={story.title} {...story} />
+              <StoryCard key={story.id} {...story} />
             ))}
           </div>
         </section>

@@ -43,8 +43,8 @@ export const EditChapterDialog = ({ chapter, onChapterUpdated }: EditChapterDial
       const { error } = await supabase
         .from("chapters")
         .update({
-          title: formData.get("title"),
-          content: formData.get("content"),
+          title: formData.get("title")?.toString() || "",
+          content: formData.get("content")?.toString() || "",
         })
         .eq("id", chapter.id);
 

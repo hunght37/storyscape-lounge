@@ -81,6 +81,7 @@ const Stories = () => {
           {filteredStories?.map((story) => (
             <StoryCard
               key={story.id}
+              id={story.id}
               title={story.title}
               author={story.author}
               description={story.description}

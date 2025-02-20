@@ -43,9 +43,9 @@ export const EditStoryDialog = ({ story, onStoryUpdated }: EditStoryDialogProps)
       const { error } = await supabase
         .from("stories")
         .update({
-          title: formData.get("title"),
-          author: formData.get("author"),
-          description: formData.get("description"),
+          title: formData.get("title")?.toString() || "",
+          author: formData.get("author")?.toString() || "",
+          description: formData.get("description")?.toString() || "",
         })
         .eq("id", story.id);
 
