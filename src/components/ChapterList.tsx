@@ -76,22 +76,23 @@ export const ChapterList = ({ storyId, isAdmin }: ChapterListProps) => {
   return (
     <>
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold mb-4">Danh sách chương</h2>
+        <h2 className="text-xl sm:text-2xl font-semibold mb-4">Danh sách chương</h2>
         {chapters?.map((chapter) => (
           <div
             key={chapter.id}
-            className="flex items-center justify-between p-4 rounded-lg border hover:bg-accent/50 cursor-pointer transition-colors"
+            className="flex items-center justify-between p-3 sm:p-4 rounded-lg border hover:bg-accent/50 cursor-pointer transition-colors"
             onClick={() => setSelectedChapter(chapter)}
           >
-            <div>
-              <h3 className="font-medium">
+            <div className="min-w-0 flex-1">
+              <h3 className="font-medium text-sm sm:text-base truncate">
                 Chương {chapter.chapter_number}: {chapter.title}
               </h3>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 ml-4">
               <Button
                 variant="ghost"
                 size="icon"
+                className="h-8 w-8 sm:h-10 sm:w-10"
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedChapter(chapter);
@@ -108,6 +109,7 @@ export const ChapterList = ({ storyId, isAdmin }: ChapterListProps) => {
                   <Button
                     variant="destructive"
                     size="icon"
+                    className="h-8 w-8 sm:h-10 sm:w-10"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDeleteChapter(chapter.id, chapter.chapter_number);
@@ -123,15 +125,17 @@ export const ChapterList = ({ storyId, isAdmin }: ChapterListProps) => {
       </div>
 
       <Dialog open={!!selectedChapter} onOpenChange={() => setSelectedChapter(null)}>
-        <DialogContent className="max-w-4xl h-[80vh]">
+        <DialogContent className="max-w-4xl h-[90vh] sm:h-[80vh]">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">
               Chương {selectedChapter?.chapter_number}: {selectedChapter?.title}
             </DialogTitle>
           </DialogHeader>
-          <div className="overflow-y-auto flex-1 prose max-w-none">
+          <div className="overflow-y-auto flex-1 prose max-w-none px-2 sm:px-4">
             {selectedChapter?.content.split('\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <p key={index} className="text-sm sm:text-base leading-relaxed sm:leading-relaxed my-4">
+                {paragraph}
+              </p>
             ))}
           </div>
         </DialogContent>

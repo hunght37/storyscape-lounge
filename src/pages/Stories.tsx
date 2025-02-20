@@ -60,11 +60,11 @@ const Stories = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 container py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Truyện Mới</h1>
-          <div className="flex gap-4">
-            <div className="relative w-64">
+      <main className="flex-1 container py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold">Truyện Mới</h1>
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <div className="relative w-full sm:w-64">
               <Input
                 type="search"
                 placeholder="Tìm kiếm truyện..."
@@ -77,7 +77,7 @@ const Stories = () => {
             {isAdmin && <AddStoryDialog onStoryAdded={refetch} />}
           </div>
         </div>
-        <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
           {filteredStories?.map((story) => (
             <StoryCard
               key={story.id}

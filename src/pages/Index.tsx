@@ -30,18 +30,18 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 container py-8">
-        <section className="mb-12">
-          <div className="flex justify-between items-center mb-6">
+      <main className="flex-1 container py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
+        <section className="mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Truyện mới cập nhật</h2>
-              <p className="text-muted-foreground mt-1">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Truyện mới cập nhật</h2>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1">
                 Khám phá những tác phẩm mới nhất
               </p>
             </div>
-            <Button variant="outline">Xem tất cả</Button>
+            <Button variant="outline" className="w-full sm:w-auto">Xem tất cả</Button>
           </div>
-          <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
             {mockStories.map((story) => (
               <StoryCard key={story.id} {...story} />
             ))}
@@ -49,16 +49,16 @@ const Index = () => {
         </section>
         
         <section>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Truyện nổi bật</h2>
-              <p className="text-muted-foreground mt-1">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Truyện nổi bật</h2>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1">
                 Những tác phẩm được yêu thích nhất
               </p>
             </div>
-            <Button variant="outline">Xem tất cả</Button>
+            <Button variant="outline" className="w-full sm:w-auto">Xem tất cả</Button>
           </div>
-          <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
             {mockStories.map((story) => (
               <StoryCard key={story.id} {...story} />
             ))}
