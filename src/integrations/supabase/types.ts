@@ -30,11 +30,50 @@ export type Database = {
         }
         Relationships: []
       }
+      chapters: {
+        Row: {
+          chapter_number: number
+          content: string
+          created_at: string
+          id: string
+          story_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          chapter_number: number
+          content: string
+          created_at?: string
+          id?: string
+          story_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          chapter_number?: number
+          content?: string
+          created_at?: string
+          id?: string
+          story_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chapters_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           created_at: string
           id: string
+          role: Database["public"]["Enums"]["user_role"]
           updated_at: string | null
           username: string | null
         }
@@ -42,6 +81,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           id: string
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
           username?: string | null
         }
@@ -49,6 +89,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           id?: string
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
           username?: string | null
         }
@@ -132,6 +173,7 @@ export type Database = {
     }
     Enums: {
       story_status: "ongoing" | "completed" | "dropped"
+      user_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never

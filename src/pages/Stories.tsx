@@ -8,6 +8,7 @@ import { Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { AddStoryDialog } from "@/components/AddStoryDialog";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Story {
   id: string;
@@ -21,6 +22,7 @@ interface Story {
 
 const Stories = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { isAdmin } = useAuth();
 
   const { data: stories, refetch } = useQuery({
     queryKey: ["stories"],
@@ -72,7 +74,7 @@ const Stories = () => {
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             </div>
-            <AddStoryDialog onStoryAdded={refetch} />
+            {isAdmin && <AddStoryDialog onStoryAdded={refetch} />}
           </div>
         </div>
         <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
